@@ -1,0 +1,23 @@
+{
+	"editor.insertSpaces": false,
+	"editor.renderWhitespace": "all",
+	"editor.tabSize": 4,
+
+	"powershell.codeFormatting.alignPropertyValuePairs": true,
+	"powershell.codeFormatting.autoCorrectAliases": false,
+	"powershell.codeFormatting.newLineAfterCloseBrace": false,
+	"powershell.codeFormatting.newLineAfterOpenBrace": false,
+	"powershell.codeFormatting.ignoreOneLineBlock": true,
+	"powershell.codeFormatting.openBraceOnSameLine": true,
+	"powershell.codeFormatting.pipelineIndentationStyle": "NoIndentation",
+	"powershell.codeFormatting.useCorrectCasing": true,
+	"powershell.codeFormatting.whitespaceAfterSeparator": true,
+	"powershell.codeFormatting.whitespaceAroundOperator": true,
+	"powershell.codeFormatting.WhitespaceAroundPipe": true,
+	"powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+	"powershell.codeFormatting.whitespaceBeforeOpenParen": false,
+	"powershell.codeFormatting.WhitespaceInsideBrace": true,
+	"powershell.helpCompletion": "BlockComment",
+	"powershell.scriptAnalysis.enable": true,
+	"powershell.scriptAnalysis.settingsPath": "PsScriptAnalyzerSettings.psd1"
+}
