@@ -4,8 +4,6 @@ function Start-VisualStudio {
 		ConfirmImpact = [System.Management.Automation.ConfirmImpact]::Medium
 	)]
 	Param(
-		[switch]$ExcludePrerelease = [switch]::new($false),
-
 		[Parameter(Position = 1, Mandatory = $false)]
 		[string]$FileOrFolder = $null,
 
@@ -13,11 +11,13 @@ function Start-VisualStudio {
 
 		[switch]$Force = [switch]::new($false),
 
-		[Parameter(ValueFromRemainingArguments)]
-		[object[]]$RemainingArguments = $null,
+		[switch]$ExcludePrerelease = [switch]::new($false),
 
 		[ValidateScript({ Confirm-VisualStudioInstance $_ })]
-		[object]$VisualStudio = $null
+		[object]$VisualStudio = $null,
+
+		[Parameter(ValueFromRemainingArguments)]
+		[object[]]$RemainingArguments = $null
 	)
 	Process {
 		if ($null -eq $VisualStudio) {

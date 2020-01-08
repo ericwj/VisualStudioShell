@@ -50,14 +50,14 @@
 	none : the command prompt will exist in the same current directory as when invoked
 	auto : the command prompt will search for [USERPROFILE]\Source and will change directory if it exists.
 
-	If -startdir=mode is not provided, the developer command prompt scripts will 
-	additionally check for the [VSCMD_START_DIR] environment variable. If not specified, 
+	If -startdir=mode is not provided, the developer command prompt scripts will
+	additionally check for the [VSCMD_START_DIR] environment variable. If not specified,
 	the default behavior will be 'none' mode.
 
 	.Parameter Test
 	Run smoke tests to verify environment integrity in an already-initialized command prompt.
 	Executing with -test will NOT modify the environment, so it must be used in a separate call
-	to vsdevcmd.bat (all other parameters should be the same as when the environment was 
+	to vsdevcmd.bat (all other parameters should be the same as when the environment was
 	initialied)
 
 	.Parameter VisualStudio
@@ -88,8 +88,6 @@ function Enter-VisualStudioShell {
 		ConfirmImpact = [System.Management.Automation.ConfirmImpact]::Medium
 	)]
 	Param(
-		[switch]$ExcludePrerelease = [switch]::new($false),
-
 		[Parameter(Mandatory = $false)]
 		[ValidateSet($null, "x86", "amd64", "arm", "arm64")]
 		[Alias("arch")]
@@ -99,7 +97,7 @@ function Enter-VisualStudioShell {
 		[ValidateSet($null, "x86", "amd64")]
 		[Alias("host_arch")]
 		[string]$HostArchitecture = $null,
-		
+
 		[Parameter(Mandatory = $false)][ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty -VisualStudio $VisualStudio })]
 		[Alias("winsdk")]
 		[string]$WindowsSdkVersion = $null,
@@ -132,6 +130,8 @@ function Enter-VisualStudioShell {
 
 		[switch]$Force = [switch]::new($false),
 
+		[switch]$ExcludePrerelease = [switch]::new($false),
+
 		[Parameter(ValueFromRemainingArguments)]
 		[object[]]$RemainingArguments = $null
 	)
@@ -153,7 +153,7 @@ function Enter-VisualStudioShell {
 		if (-not (Import-VisualStudioShellModule -VisualStudio $VisualStudio)) {
 			Write-Error "Could not load the Visual Studio Shell module."
 		}
-		
+
 		$DevCmdArguments = Format-VisualStudioShellArguments `
 			-VisualStudio $VisualStudio `
 			-Architecture $Architecture `
@@ -194,7 +194,7 @@ function Enter-VisualStudioShell {
 				$StartInPath = $PWD.Path
 			}
 		}
-		
+
 		# On older Visual Studios, on PowerShell Core, only the first time, MethodNotFoundException occurs
 		while ($true) {
 			try {
@@ -208,9 +208,9 @@ function Enter-VisualStudioShell {
 				$e = $_
 				$x = $e.Exception
 				while ($x -is [System.AggregateException]) { $x = $x.InnerException }
-				if ($x -is [System.MissingMethodException] -and ($x.Message -match "GetAccessControl")) { 
-					$m = 
-						"Ignoring expected exception {0} with message '{1}' " + 
+				if ($x -is [System.MissingMethodException] -and ($x.Message -match "GetAccessControl")) {
+					$m =
+						"Ignoring expected exception {0} with message '{1}' " +
 						"because the environment has been successfully initialized."
 					$m = $m -f @(
 						$x.GetType().Name
