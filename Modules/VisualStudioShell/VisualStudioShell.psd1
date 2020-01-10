@@ -13,10 +13,10 @@
 	Copyright             = '(c) 2019-2020 Eric. All rights reserved.'
 	Description           = 'Starts Visual Studio or Developer Command Prompt'
 	PowerShellVersion     = '2.0'   # Minimum version of the PowerShell engine required
-	CompatiblePSEditions  = @(      # Supported PSEditions
-		'Desktop'
-		'Core'
-	)
+	# CompatiblePSEditions  = @(      # Supported PSEditions
+	#	'Desktop'
+	#	'Core'
+	# )
 	# PowerShellHostName = ''       # Name of the PowerShell host required
 	# PowerShellHostVersion = ''    # Minimum version of the PowerShell host required
 	# DotNetFrameworkVersion = ''   # Minimum version of Microsoft .NET Framework required (PowerShell Desktop)
