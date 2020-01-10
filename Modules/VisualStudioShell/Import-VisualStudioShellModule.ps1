@@ -1,3 +1,6 @@
+#Requires -Module VSSetup
+using module VSSetup
+using namespace System.Management.Automation
 <#
 	.Synopsis
 	Start a Developer Command Prompt for Visual Studio.
@@ -15,8 +18,7 @@ function Import-VisualStudioShellModule {
 	[CmdLetBinding()]
 	Param(
 		[Parameter(Mandatory = $true)]
-		[ValidateScript({ Confirm-VisualStudioInstance $_ })]
-		[object]$VisualStudio
+		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio
 	)
 	function LogResult($Module) {
 		if ($null -eq $Module) {
@@ -28,10 +30,10 @@ function Import-VisualStudioShellModule {
 		}
 	}
 	function ThrowIfModuleNotFound([string]$ModulePath) {
-		throw [System.Management.Automation.ErrorRecord]::new(
+		throw [ErrorRecord]::new(
         	[System.Exception]::new("Required assembly could not be located. This most likely indicates an installation error. Try repairing your Visual Studio installation. Expected location: $modulePath"),
         	"DevShellModuleLoad",
-        	[System.Management.Automation.ErrorCategory]::NotInstalled,
+        	[ErrorCategory]::NotInstalled,
 			$VisualStudio)
 	}
 	# Developer PowerShell for VS 2019 Preview

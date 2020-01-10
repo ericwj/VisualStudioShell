@@ -5,22 +5,30 @@
 #
 
 @{
-	# RootModule = ''               # Script module or binary module file associated with this manifest.
-	ModuleToProcess       = 'VisualStudioShell.psm1'
-	ModuleVersion         = '0.1.0'
+	RootModule            = 'VisualStudioShell.psm1'
+	ModuleVersion         = '0.3.0'
 	GUID                  = '5ca15b3d-9366-45d7-b366-2a9c1d2bcd25'
 	Author                = 'Eric'
 	CompanyName           = 'Eric'
 	Copyright             = '(c) 2019-2020 Eric. All rights reserved.'
 	Description           = 'Starts Visual Studio or Developer Command Prompt'
 	PowerShellVersion     = '2.0'   # Minimum version of the PowerShell engine required
-	# CompatiblePSEditions = @()    # Supported PSEditions
+	CompatiblePSEditions  = @(      # Supported PSEditions
+		'Desktop'
+		'Core'
+	)
 	# PowerShellHostName = ''       # Name of the PowerShell host required
 	# PowerShellHostVersion = ''    # Minimum version of the PowerShell host required
 	# DotNetFrameworkVersion = ''   # Minimum version of Microsoft .NET Framework required (PowerShell Desktop)
 	CLRVersion            = '2.0'   # Minimum version of the CLR required (PowerShell Desktop)
 	ProcessorArchitecture = 'None'  # Processor architecture (None, X86, Amd64) required
-	# RequiredModules = @()         # Modules that must be imported prior to this module
+	RequiredModules = @(            # Modules that must be imported prior to this module
+		@{
+			ModuleName = 'VSSetup'
+			ModuleVersion = '2.0.0'
+			Guid = '440e8fb1-19c4-4d39-8f75-37424bc4265a'
+		}
+	)
 	# RequiredAssemblies = @()      # Assemblies that must be loaded prior to this module
 
 	ScriptsToProcess      = @()     # Script files (.ps1) run in the caller's environment prior to importing this module.
@@ -28,20 +36,18 @@
 	FormatsToProcess      = @()     # Format files (.ps1xml) to be loaded when importing this module
 	NestedModules         = @()     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 	FunctionsToExport     = @(      # Functions to export
-		"Confirm-VisualStudioInstance"
-		"Confirm-WindowsSdkVersion"
-		"Enter-VisualStudioShell"
-		"Format-VisualStudioShellArguments"
-		"Get-VisualStudio"
-		"Import-VisualStudioShellModule"
-		"Import-VisualStudioSetupModule"
-		"Start-VisualStudio"
+		'Confirm-WindowsSdkVersion'
+		'Enter-VisualStudioShell'
+		'Format-VisualStudioShellArguments'
+		'Get-VisualStudio'
+		'Import-VisualStudioShellModule'
+		'Start-VisualStudio'
 	)
 	CmdletsToExport       = @()     # Cmdlets to export
 	VariablesToExport     = '*'     # Variables to export
 	AliasesToExport       = @(      # Aliases to export from this module
-		"vshell"
-		"vs"
+		'vshell'
+		'vs'
 	)
 	DscResourcesToExport  = @()     # DSC resources to export from this module
 	ModuleList            = @()     # List of all modules packaged with this module
@@ -50,9 +56,16 @@
 	PrivateData           = @{
 
 		PSData = @{
-			ProjectUri = "https://github.com/ericwj/VisualStudioShell"
-			LicenseUri = "https://github.com/ericwj/VisualStudioShell/raw/master/LICENSE.txt"
+			ProjectUri = 'https://github.com/ericwj/VisualStudioShell'
+			LicenseUri = 'https://github.com/ericwj/VisualStudioShell/raw/master/LICENSE.txt'
 			RequireLicenseAcceptance = $false
+			Prerelease = 'beta'
+			Tags = @(
+				# Tags for PowerShell Gallery
+				'PSEdition_Desktop', 'PSEdition_Core', 'Windows', 'MacOS',
+				# Tags describing the functionality of this module
+				'VS', 'VShell', 'VisualStudio', 'Shell', 'VsDevCmd', 'DeveloperCommandPrompt', 'Devenv'
+			)
 		}
 
 	} # End of PrivateData hashtable

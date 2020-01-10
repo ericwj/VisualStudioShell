@@ -1,3 +1,5 @@
+#Requires -Module VSSetup
+using module VSSetup
 # See C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\Tools\vsdevcmd\core\parse_cmd.bat
 # The alias for each argument is the name defined in that file
 <#
@@ -50,14 +52,14 @@
 	none : the command prompt will exist in the same current directory as when invoked
 	auto : the command prompt will search for [USERPROFILE]\Source and will change directory if it exists.
 
-	If -startdir=mode is not provided, the developer command prompt scripts will 
-	additionally check for the [VSCMD_START_DIR] environment variable. If not specified, 
+	If -startdir=mode is not provided, the developer command prompt scripts will
+	additionally check for the [VSCMD_START_DIR] environment variable. If not specified,
 	the default behavior will be 'none' mode.
 
 	.Parameter Test
 	Run smoke tests to verify environment integrity in an already-initialized command prompt.
 	Executing with -test will NOT modify the environment, so it must be used in a separate call
-	to vsdevcmd.bat (all other parameters should be the same as when the environment was 
+	to vsdevcmd.bat (all other parameters should be the same as when the environment was
 	initialied)
 
 	.Parameter RemainingArguments
@@ -77,7 +79,7 @@ function Format-VisualStudioShellArguments {
 		[ValidateSet($null, "x86", "amd64")]
 		[Alias("host_arch")]
 		[string]$HostArchitecture = $null,
-		
+
 		[Parameter(Mandatory = $false)][ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty })]
 		[Alias("winsdk")]
 		[string]$WindowsSdkVersion = $null,
@@ -105,8 +107,7 @@ function Format-VisualStudioShellArguments {
 		[object[]]$RemainingArguments = $null,
 
 		[Parameter()]
-		[ValidateScript({ Confirm-VisualStudioInstance $_ })]
-		[object]$VisualStudio = $null
+		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null
 	)
 	$Result = [System.Collections.Generic.List[string]]::new()
 	function NotNullOrEmpty([string]$s) { -not [string]::IsNullOrEmpty($s) }
@@ -142,7 +143,7 @@ function Format-VisualStudioShellArguments {
 		$WasSwitch = $false
 		$IsSwitch = $false
 		[string]$Last = $null
-		function IsThisASwitch([string]$value) { 
+		function IsThisASwitch([string]$value) {
 			$null -ne $value -and `
 			$value.Length -gt 1 -and `
 			($value.StartsWith("/") -or $value.StartsWith("-"))

@@ -1,3 +1,5 @@
+#Requires -Module VSSetup
+using module VSSetup
 <#
 	.Synopsis
 	Start a Visual Studio Developer Command Prompt
@@ -122,8 +124,7 @@ function Enter-VisualStudioShell {
 		[switch]$Test = [switch]::new($false),
 
 		[Parameter()]
-		[ValidateScript({ Confirm-VisualStudioInstance $_ })]
-		[object]$VisualStudio = $null,
+		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null,
 
 		[switch]$SkipExistingEnvironmentVariables = [switch]::new($false),
 		[string]$StartInPath = $PWD,
@@ -137,14 +138,6 @@ function Enter-VisualStudioShell {
 	)
 	Process {
 		if ($null -eq $VisualStudio) {
-			if (-not $script:IsSetupModuleLoaded) {
-				$ok = Import-VisualStudioSetupModule `
-					-Force:($Force.IsPresent) -ErrorAction Stop
-				if (-not $ok) {
-					Write-Error "The Visual Studio Setup module '$SetupModuleName' could not be loaded."
-					return
-				}
-			}
 			$VisualStudio = Get-VisualStudio -ExcludePrerelease:($ExcludePrerelease.IsPresent)
 		} elseif (-not (Confirm-VisualStudio $VisualStudio)) {
 			Write-Error "The Visual Studio parameter is not valid. Remove the parameter or specify a valid value."

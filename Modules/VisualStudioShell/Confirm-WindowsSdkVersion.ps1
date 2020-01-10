@@ -1,3 +1,5 @@
+#Requires -Module VSSetup
+using module VSSetup
 <#
 	.Synopsis
 	Validates a Windows SDK version.
@@ -20,7 +22,7 @@ function Confirm-WindowsSdkVersion {
 	[CmdLetBinding()]
 	Param(
 		[string]$WindowsSdkVersion,
-		[object]$VisualStudio = $null,
+		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null,
 		[switch]$AllowNullOrEmpty = [switch]::new($false)
 	)
 	Process {
@@ -34,7 +36,7 @@ function Confirm-WindowsSdkVersion {
 		}
 		if ([string]::IsNullOrEmpty($WindowsSdkVersion) -and $AllowNullOrEmpty.IsPresent) {
 			return LogResult($true)
-		} elseif (-not (Confirm-VisualStudioInstance $VisualStudio)) {
+		} elseif ($null -eq $VisualStudio) {
 			# e.g. none, 8.1, 10.0.10240.0, 10.0.010240.0
 			$rex = [System.Text.RegularExpressions.Regex]::new("(none|8.1|10.0.\d{5,6}.0)")
 			return LogResult($rex.IsMatch($WindowsSdkVersion))
