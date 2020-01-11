@@ -70,21 +70,18 @@ using module VSSetup
 function Format-VisualStudioShellArguments {
 	[CmdLetBinding()]
 	Param(
-		[Parameter(Mandatory = $false)]
 		[ValidateSet($null, "x86", "amd64", "arm", "arm64")]
 		[Alias("arch")]
 		[string]$Architecture = $null,
 
-		[Parameter(Mandatory = $false)]
 		[ValidateSet($null, "x86", "amd64")]
 		[Alias("host_arch")]
 		[string]$HostArchitecture = $null,
 
-		[Parameter(Mandatory = $false)][ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty })]
+		[ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty })]
 		[Alias("winsdk")]
 		[string]$WindowsSdkVersion = $null,
 
-		[Parameter()]
 		[ValidateSet($null, "Desktop", "UWP")]
 		[Alias("app_platform")]
 		[string]$AppPlatform,
@@ -95,7 +92,6 @@ function Format-VisualStudioShellArguments {
 		[Alias("no_logo")]
 		[switch]$NoLogo = [switch]::new($false),
 
-		[Parameter()]
 		[ValidateSet($null, "none", "auto")]
 		[Alias("startdir")]
 		[string]$StartDirectoryMode = $null,
@@ -103,10 +99,9 @@ function Format-VisualStudioShellArguments {
 		# [Alias("test")] can't be the same case-insensitively
 		[switch]$Test = [switch]::new($false),
 
-		[Parameter(ValueFromRemainingArguments)]
+		[Parameter(ValueFromRemainingArguments = $true)]
 		[object[]]$RemainingArguments = $null,
 
-		[Parameter()]
 		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null
 	)
 	$Result = [System.Collections.Generic.List[string]]::new()

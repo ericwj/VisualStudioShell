@@ -90,21 +90,18 @@ function Enter-VisualStudioShell {
 		ConfirmImpact = [System.Management.Automation.ConfirmImpact]::Medium
 	)]
 	Param(
-		[Parameter(Mandatory = $false)]
 		[ValidateSet($null, "x86", "amd64", "arm", "arm64")]
 		[Alias("arch")]
 		[string]$Architecture = $null,
 
-		[Parameter(Mandatory = $false)]
 		[ValidateSet($null, "x86", "amd64")]
 		[Alias("host_arch")]
 		[string]$HostArchitecture = $null,
 
-		[Parameter(Mandatory = $false)][ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty -VisualStudio $VisualStudio })]
+		[ValidateScript({ Confirm-WindowsSdkVersion -WindowsSdkVersion $_ -AllowNullOrEmpty -VisualStudio $VisualStudio })]
 		[Alias("winsdk")]
 		[string]$WindowsSdkVersion = $null,
 
-		[Parameter()]
 		[ValidateSet($null, "Desktop", "UWP")]
 		[Alias("app_platform")]
 		[string]$AppPlatform,
@@ -115,7 +112,6 @@ function Enter-VisualStudioShell {
 		[Alias("no_logo")]
 		[switch]$NoLogo = [switch]::new($false),
 
-		[Parameter()]
 		[ValidateSet($null, "none", "auto")]
 		[Alias("startdir")]
 		[string]$StartDirectoryMode = $null,
@@ -123,7 +119,6 @@ function Enter-VisualStudioShell {
 		# [Alias("test")] can't be the same case-insensitively
 		[switch]$Test = [switch]::new($false),
 
-		[Parameter()]
 		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null,
 
 		[switch]$SkipExistingEnvironmentVariables = [switch]::new($false),

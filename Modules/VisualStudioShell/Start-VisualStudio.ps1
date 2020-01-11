@@ -6,7 +6,7 @@ function Start-VisualStudio {
 		ConfirmImpact = [System.Management.Automation.ConfirmImpact]::Medium
 	)]
 	Param(
-		[Parameter(Position = 1, Mandatory = $false)]
+		[Parameter(Position = 1)]
 		[string]$FileOrFolder = $null,
 
 		[string]$StartInPath = $PWD,
@@ -15,10 +15,9 @@ function Start-VisualStudio {
 
 		[switch]$ExcludePrerelease = [switch]::new($false),
 
-		[ValidateScript({ Confirm-VisualStudioInstance $_ })]
 		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio = $null,
 
-		[Parameter(ValueFromRemainingArguments)]
+		[Parameter(ValueFromRemainingArguments = $true)]
 		[object[]]$RemainingArguments = $null
 	)
 	Process {
