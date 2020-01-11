@@ -6,7 +6,7 @@
 
 @{
 	RootModule            = 'VisualStudioShell.psm1'
-	ModuleVersion         = '0.3.0'
+	ModuleVersion         = '0.3.1'
 	GUID                  = '5ca15b3d-9366-45d7-b366-2a9c1d2bcd25'
 	Author                = 'Eric'
 	CompanyName           = 'Eric'

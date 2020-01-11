@@ -17,7 +17,7 @@ using namespace System.Management.Automation
 function Import-VisualStudioShellModule {
 	[CmdLetBinding()]
 	Param(
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)][ValidateNotNull()]
 		[Microsoft.VisualStudio.Setup.Instance]$VisualStudio
 	)
 	function LogResult($Module) {
