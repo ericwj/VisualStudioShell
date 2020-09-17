@@ -6,18 +6,32 @@ using module VSSetup
 
 	.Parameter ExcludePrerelease
 	Do not allow selection of Preview versions of Visual Studio. (Passed through negated to Get-VSSetupInstance)
+
+	.Parameter Product
+	One or more products to select. Wildcards are supported.
 #>
 function Get-VisualStudio {
 	[CmdLetBinding()]
 	[OutputType([Microsoft.VisualStudio.Setup.Instance])]
 	Param(
-		[switch]$ExcludePrerelease = [switch]::new($false)
+		[switch]$ExcludePrerelease = [switch]::new($false),
+		[string[]]$Product = $null
 	)
-	$VS =
-		Get-VSSetupInstance -Prerelease:$(-not $Prerelease.IsPresent) |
-		Select-VSSetupInstance -Latest |
-		Sort-Object -Property InstallationVersion |
-		Select-Object -Last 1
+
+	$VS = $null
+	if ($null -eq $Product) {
+		$VS =
+			Get-VSSetupInstance -Prerelease:$(-not $Prerelease.IsPresent) |
+			Select-VSSetupInstance -Latest |
+			Sort-Object -Property InstallationVersion |
+			Select-Object -Last 1
+	} else {
+		$VS =
+			Get-VSSetupInstance -Prerelease:$(-not $Prerelease.IsPresent) |
+			Select-VSSetupInstance -Latest -Product:$Product |
+			Sort-Object -Property InstallationVersion |
+			Select-Object -Last 1
+	}
 
 	if ($null -eq $VS) {
 		Write-Warning "Could not find an installed version of Visual Studio"

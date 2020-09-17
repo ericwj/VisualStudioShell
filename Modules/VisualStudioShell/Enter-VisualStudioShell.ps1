@@ -44,6 +44,9 @@ using module VSSetup
 	.Parameter NoLogo
 	Suppress printing of the developer command prompt banner.
 
+	.Parameter Product
+	One or more products to select. Wildcards are supported.
+
 	.Parameter StartDirectoryMode
 	The startup directory mode.
 
@@ -112,6 +115,8 @@ function Enter-VisualStudioShell {
 		[Alias("no_logo")]
 		[switch]$NoLogo = [switch]::new($false),
 
+		[string[]]$Product = $null,
+
 		[ValidateSet($null, "none", "auto")]
 		[Alias("startdir")]
 		[string]$StartDirectoryMode = $null,
@@ -133,7 +138,11 @@ function Enter-VisualStudioShell {
 	)
 	Process {
 		if ($null -eq $VisualStudio) {
-			$VisualStudio = Get-VisualStudio -ExcludePrerelease:($ExcludePrerelease.IsPresent)
+			if ($null -eq $Product) {
+				$VisualStudio = Get-VisualStudio -ExcludePrerelease:($ExcludePrerelease.IsPresent)
+			} else {
+				$VisualStudio = Get-VisualStudio -ExcludePrerelease:($ExcludePrerelease.IsPresent) -Product:$Product
+			}
 		} elseif (-not (Confirm-VisualStudio $VisualStudio)) {
 			Write-Error "The Visual Studio parameter is not valid. Remove the parameter or specify a valid value."
 			return;
