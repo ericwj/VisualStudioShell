@@ -31,9 +31,9 @@ function Import-VisualStudioShellModule {
 	}
 	function ThrowIfModuleNotFound([string]$ModulePath) {
 		throw [ErrorRecord]::new(
-        	[System.Exception]::new("Required assembly could not be located. This most likely indicates an installation error. Try repairing your Visual Studio installation. Expected location: $modulePath"),
-        	"DevShellModuleLoad",
-        	[ErrorCategory]::NotInstalled,
+			[System.Exception]::new("Required assembly could not be located. This most likely indicates an installation error. Try repairing your Visual Studio installation. Expected location: $modulePath"),
+			"DevShellModuleLoad",
+			[ErrorCategory]::NotInstalled,
 			$VisualStudio)
 	}
 	# Developer PowerShell for VS 2019 Preview

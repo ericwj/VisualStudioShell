@@ -8,7 +8,9 @@ using module VSSetup
 	Do not allow selection of Preview versions of Visual Studio. (Passed through negated to Get-VSSetupInstance)
 
 	.Parameter Product
-	One or more products to select. Wildcards are supported.
+	One or more products to select. Wildcards are supported. (Passed through to Select-VSSetupInstance)
+
+	Run `Get-VSSetupInstance | Select-Object Product` to obtain a list of available valid values albeit with a version number.
 #>
 function Get-VisualStudio {
 	[CmdLetBinding()]
@@ -21,13 +23,13 @@ function Get-VisualStudio {
 	$VS = $null
 	if ($null -eq $Product) {
 		$VS =
-			Get-VSSetupInstance -Prerelease:$(-not $Prerelease.IsPresent) |
+			Get-VSSetupInstance -Prerelease:$(-not $ExcludePrerelease.IsPresent) |
 			Select-VSSetupInstance -Latest |
 			Sort-Object -Property InstallationVersion |
 			Select-Object -Last 1
 	} else {
 		$VS =
-			Get-VSSetupInstance -Prerelease:$(-not $Prerelease.IsPresent) |
+			Get-VSSetupInstance -Prerelease:$(-not $ExcludePrerelease.IsPresent) |
 			Select-VSSetupInstance -Latest -Product:$Product |
 			Sort-Object -Property InstallationVersion |
 			Select-Object -Last 1

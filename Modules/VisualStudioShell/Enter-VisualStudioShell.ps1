@@ -45,7 +45,9 @@ using module VSSetup
 	Suppress printing of the developer command prompt banner.
 
 	.Parameter Product
-	One or more products to select. Wildcards are supported.
+	One or more products to select. Wildcards are supported. (Passed through to Select-VSSetupInstance)
+
+	Run `Get-VSSetupInstance | Select-Object Product` to obtain a list of available valid values albeit with a version number.
 
 	.Parameter StartDirectoryMode
 	The startup directory mode.
